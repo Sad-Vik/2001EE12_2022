@@ -1,13 +1,6 @@
-# Defining Function
-def factorial(x):
-    if x == 0:
-        return 1
-    elif x > 0:
-        return x*factorial(x-1)  # Recursion
-    else:
-        return 'Enter a Valid Number!'
+def octact_identification(mod=5000):
+###Code
 
 
-x = int(input("Enter the number whose factorial is to be found "))
-Result = factorial(x)  # Calling the function
-print(Result)
+mod=5000
+octact_identification(mod)
