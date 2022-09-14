@@ -29,7 +29,7 @@ ip.loc[[0, 1], "OctantID", ] = ["Overall Count", "Mod ="+str(mod)]
 
 num = ip['Octant'].value_counts()
 
-# assigning count numbers from value count under all octants(+1,-1,+2,-2,+3,-3,+4,-4)
+# assigning octant count numbers from value_count under all octants(+1,-1,+2,-2,+3,-3,+4,-4)
 ip.loc[0, "+1"] = num["+1"]
 ip.loc[0, "-1"] = num["-1"]
 ip.loc[0, "+2"] = num["+2"]
@@ -38,10 +38,11 @@ ip.loc[0, "+3"] = num["+3"]
 ip.loc[0, "-3"] = num["-3"]
 ip.loc[0, "+4"] = num["+4"]
 ip.loc[0, "-4"] = num["-4"]
-# Assign a variable
+# defining a lower and higher boundaries
 low = 0000
 m = mod
 i = 1
+#making loop that runs for as long as m is less than total value count
 while m <= len(ip):
     ip['OctantID'][i+1] = str(low) + "-" + str(m-1)
     p1 = 0
@@ -52,7 +53,7 @@ while m <= len(ip):
     n2 = 0
     n3 = 0
     n4 = 0
-    for j in range(low, m):
+    for j in range(low, m):                    #for loop that runs for say 0-4999 and if-loops count octant count
         if ip['Octant'][j] == "+1":
             p1 = p1+1
         elif ip['Octant'][j] == "-1":
@@ -69,7 +70,7 @@ while m <= len(ip):
             p4 = p4+1
         elif ip['Octant'][j] == "-4":
             n4 = n4+1
-    ip.loc[i+1, "+1"] = p1
+    ip.loc[i+1, "+1"] = p1      #appending those values from the loop to i+1 th row of +1th coloumn
     ip.loc[i+1, "-1"] = n1
     ip.loc[i+1, "+2"] = p2
     ip.loc[i+1, "-2"] = n2
@@ -77,12 +78,12 @@ while m <= len(ip):
     ip.loc[i+1, "-3"] = n3
     ip.loc[i+1, "+4"] = p4
     ip.loc[i+1, "-4"] = n4
-    low = m
+    low = m                 #exchanging upper limit to lower so as to run again
     i = i+1
-    m = mod*i
-    if m > len(ip):
+    m = mod*i               #modifying upper limit
+    if m > len(ip):         #to check if the upper limit is excceding the total value
         m = len(ip)
-ip.to_csv("octant_output.csv")
+ip.to_csv("octant_output.csv")   #exporting data frame to csv
 
 
 mod = 5000
