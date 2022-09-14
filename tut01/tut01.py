@@ -82,7 +82,7 @@ while m <= len(ip):
         m = mod*i
         if m > len(ip):
             m = len(ip)
-ip.to_csv("octant_output1.csv")
+ip.to_csv("octant_output.csv")
 
 
 mod = 5000
