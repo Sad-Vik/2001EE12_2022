@@ -43,7 +43,7 @@ low = 0000
 m = mod
 i = 1
 while m <= len(ip):
-    ip['OctantID'][i+1] = str(low)+"-"+str(m-1)
+    ip['OctantID'][i+1] = str(low) + "-" + str(m-1)
     p1 = 0
     p2 = 0
     p3 = 0
@@ -59,7 +59,7 @@ while m <= len(ip):
             n1 = n1+1
         elif ip['Octant'][j] == "+2":
             p2 = p2+1
-        elif ip['Octant'][j] == "+-2":
+        elif ip['Octant'][j] == "+2":
             n2 = n2+1
         elif ip['Octant'][j] == "+3":
             p3 = p3+1
@@ -69,19 +69,19 @@ while m <= len(ip):
             p4 = p4+1
         elif ip['Octant'][j] == "-4":
             n4 = n4+1
-        ip.loc[i+2, "+1"] = p1
-        ip.loc[i+2, "-1"] = n1
-        ip.loc[i+2, "+2"] = p2
-        ip.loc[i+2, "-2"] = n2
-        ip.loc[i+2, "+3"] = p3
-        ip.loc[i+2, "-3"] = n3
-        ip.loc[i+2, "+4"] = p4
-        ip.loc[i+2, "-4"] = n4
-        low = m
-        i = i+1
-        m = mod*i
-        if m > len(ip):
-            m = len(ip)
+    ip.loc[i+1, "+1"] = p1
+    ip.loc[i+1, "-1"] = n1
+    ip.loc[i+1, "+2"] = p2
+    ip.loc[i+1, "-2"] = n2
+    ip.loc[i+1, "+3"] = p3
+    ip.loc[i+1, "-3"] = n3
+    ip.loc[i+1, "+4"] = p4
+    ip.loc[i+1, "-4"] = n4
+    low = m
+    i = i+1
+    m = mod*i
+    if m > len(ip):
+        m = len(ip)
 ip.to_csv("octant_output.csv")
 
 
