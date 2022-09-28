@@ -58,7 +58,7 @@ def octact_identification(mod):
                 n1 = n1+1
             elif ip['Octant'][j] == "+2":
                 p2 = p2+1
-            elif ip['Octant'][j] == "+2":
+            elif ip['Octant'][j] == "-2":
                 n2 = n2+1
             elif ip['Octant'][j] == "+3":
                 p3 = p3+1
