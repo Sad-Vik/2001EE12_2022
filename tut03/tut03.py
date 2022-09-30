@@ -37,7 +37,7 @@ def octant_longest_subsequence_count():
                 if cnt[x] == max_cnt[x]:
                     num[x] += 1
                     cnt[x] = 0
-                if max_cnt[x] > cnt[x]:
+                elif max_cnt[x] > cnt[x]:
                     cnt[x] = 0
 # Filling the list values to columns using loc
     ip.loc[0, "Count"] = "+1"
