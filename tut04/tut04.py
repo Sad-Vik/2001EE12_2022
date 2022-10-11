@@ -25,27 +25,24 @@ def octant_longest_subsequence_count_with_range():
             cnt = [0 for i in range(9)]  # For iterating over range
             max_cnt = [0 for j in range(9)]  # For storing max value of cnt
             num = [0 for k in range(9)]  # For assigning count repetitions
-            To = [0 for m in range(9)]
-            T_3 = [0, 0]
-            n = 0
-# T_3 list is made with assuming that maximum repetion of sequence is 3
+            To = [[0] for m in range(9)]  # Creating a List of lists (LOL)
+
             for i in range(len(ip)-1):
                 x = int(ip.loc[i, "Octant"])+4
                 y = int(ip.loc[i+1, "Octant"])+4
                 cnt[x] += 1
                 if cnt[x] != cnt[y]:
                     if max_cnt[x] < cnt[x]:
+                        To[x].pop()
+                        # poping those end values when max_cnt is not maximum
                         max_cnt[x] = cnt[x]
                         num[x] = 1
-                        To[x] = ip.loc[i, "Time"]
-        # since we know that all octant sequence count is 1 except "-1"
+                        To[x] = [ip.loc[i, "Time"]]
                         cnt[x] = 0
                     else:
                         if cnt[x] == max_cnt[x]:
-                            # since we already know the no.of repetitions
-                            if x == 3 and max_cnt[3] == 18 and n < 2:
-                                T_3[n] = ip.loc[i, "Time"]
-                                n += 1
+                            To[x].append(ip.loc[i, "Time"])
+# Since a LOL is made to append value. If maximum isnt reached it will be poped
                             num[x] += 1
                             cnt[x] = 0
                         elif max_cnt[x] > cnt[x]:
@@ -154,38 +151,39 @@ def octant_longest_subsequence_count_with_range():
                    + num[7]+num[1]+num[8], "LS Count."] = "To"
 
 # Since the table has been already created manually just inserting the values
+            ip.loc[2, "LS Count."] = To[5][0]
+            ip.loc[5, "LS Count."] = To[3][0]
+            ip.loc[10, "LS Count."] = To[6][0]
+            ip.loc[13, "LS Count."] = To[2][0]
+            ip.loc[16, "LS Count."] = To[7][0]
+            ip.loc[19, "LS Count."] = To[1][0]
+            ip.loc[22, "LS Count."] = To[8][0]
+            ip.loc[25, "LS Count."] = To[0][0]
 
-            ip.loc[2, "LS Count."] = To[5]
-            ip.loc[5, "LS Count."] = To[3]
-            ip.loc[10, "LS Count."] = To[6]
-            ip.loc[13, "LS Count."] = To[2]
-            ip.loc[16, "LS Count."] = To[7]
-            ip.loc[19, "LS Count."] = To[1]
-            ip.loc[22, "LS Count."] = To[8]
-            ip.loc[25, "LS Count."] = To[0]
+            ip.loc[2, "Longest Subsequence Length."] = (
+                To[5][0])-(max_cnt[5]-1)/100
+            ip.loc[5, "Longest Subsequence Length."] = (
+                To[3][0])-(max_cnt[3]-1)/100
+            ip.loc[10, "Longest Subsequence Length."] = (
+                To[6][0])-(max_cnt[6]-1)/100
+            ip.loc[13, "Longest Subsequence Length."] = (
+                To[2][0])-(max_cnt[2]-1)/100
+            ip.loc[16, "Longest Subsequence Length."] = (
+                To[7][0])-(max_cnt[7]-1)/100
+            ip.loc[19, "Longest Subsequence Length."] = (
+                To[1][0])-(max_cnt[1]-1)/100
+            ip.loc[22, "Longest Subsequence Length."] = (
+                To[8][0])-(max_cnt[8]-1)/100
+            ip.loc[25, "Longest Subsequence Length."] = (
+                To[0][0])-(max_cnt[0]-1)/100
 
-            ip.loc[2, "Longest Subsequence Length."] = To[5]-(max_cnt[5]-1)/100
-            ip.loc[5, "Longest Subsequence Length."] = To[3]-(max_cnt[3]-1)/100
-            ip.loc[10, "Longest Subsequence Length."] = To[6] - \
-                (max_cnt[6]-1)/100
-            ip.loc[13, "Longest Subsequence Length."] = To[2] - \
-                (max_cnt[2]-1)/100
-            ip.loc[16, "Longest Subsequence Length."] = To[7] - \
-                (max_cnt[7]-1)/100
-            ip.loc[19, "Longest Subsequence Length."] = To[1] - \
-                (max_cnt[1]-1)/100
-            ip.loc[22, "Longest Subsequence Length."] = To[8] - \
-                (max_cnt[8]-1)/100
-            ip.loc[25, "Longest Subsequence Length."] = To[0] - \
-                (max_cnt[0]-1)/100
-
-            # since the subsequence repeats for "-1"
-            ip.loc[6, "LS Count."] = T_3[0]
-            ip.loc[6, "Longest Subsequence Length."] = T_3[0] - \
-                (max_cnt[3]-1)/100
-            ip.loc[7, "LS Count."] = T_3[1]
-            ip.loc[7, "Longest Subsequence Length."] = T_3[1] - \
-                (max_cnt[3]-1)/100
+            # since there are repetions for "-1"
+            ip.loc[6, "LS Count."] = To[3][1]
+            ip.loc[6, "Longest Subsequence Length."] = (
+                To[3][1])-(max_cnt[3]-1)/100
+            ip.loc[7, "LS Count."] = To[3][2]
+            ip.loc[7, "Longest Subsequence Length."] = (
+                To[3][2])-(max_cnt[3]-1)/100
 
             ip.to_excel(
                 "output_octant_longest_subsequence_with_range.xlsx", index=False)
