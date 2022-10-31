@@ -35,15 +35,10 @@ def octant_range_names(mod=5000):
 
         num = ip['Octant'].value_counts()
 
-# assigning octant count numbers from value_count under all octants(+1,-1,+2,-2,+3,-3,+4,-4)
-        ip.loc[0, "+1"] = num["+1"]
-        ip.loc[0, "-1"] = num["-1"]
-        ip.loc[0, "+2"] = num["+2"]
-        ip.loc[0, "-2"] = num["-2"]
-        ip.loc[0, "+3"] = num["+3"]
-        ip.loc[0, "-3"] = num["-3"]
-        ip.loc[0, "+4"] = num["+4"]
-        ip.loc[0, "-4"] = num["-4"]
+# assigning octant count numbers from value_count for all octants
+        for i in ["+1", "-1", "+2", "-2", "+3", "-3", "+4", "-4"]:
+            ip.loc[0, "{}".format(i)] = num["{}".format(i)]
+
     # defining a lower and higher boundaries
         low = 0000
         m = mod
@@ -137,8 +132,10 @@ def octant_range_names(mod=5000):
                 ip.loc[rno, "Rank1 Octant Name"] = octant_name_id_mapping[i]
             rno += 1
         l, rno = ceil+5, 0
-        ip.loc[l-1, "+1"], ip.loc[l-1, "-1"] = "Octant ID", "Octant Name"
         cnt = ip["Rank1 Octant ID"].value_counts()
+        ip.loc[l-1, "+1"], ip.loc[l-1, "-1"] = "Octant ID", "Octant Name"
+        ip.loc[l-1, "+2"] = "Count of Rank 1 Mod Values"
+        cnt[ip["Rank1 Octant ID"][0]] -= 1  # Since we need cnt of mod vales.
         for i in octant_name_id_mapping.keys():
             ip.loc[l+rno, "+1"] = i
             ip.loc[l+rno, "-1"] = octant_name_id_mapping[i]
