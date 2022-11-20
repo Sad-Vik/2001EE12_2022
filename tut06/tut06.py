@@ -10,15 +10,18 @@ def attendance_report():
             pd.io.formats.excel.ExcelFormatter.header_style = None
             data = pd.read_csv("input_attendance.csv")
             ip = pd.read_csv("input_registered_students.csv")
-            df1 = data['Timestamp'].str.extract(r'(?P<Date>[0-9]{2}/[0-9]{2}/[0-9]{4}) (?P<Time>[0-9]{2}:[0-9]{1,2}:[0-9]{1,2})')
-            df2 = data['Attendance'].str.extract(r'(?P<Roll>[0-9]{4}[a-zA-Z]{2}[0-9]{2}) (?P<Name>[a-zA-Z ]*$)')
-            df = pd.concat([df1,df2],axis = 1)
-            for i in range(len(df)):
-                date, time = df.iloc[i, 0], df.iloc[i, 1]
-                dd, mm, yy = (int(x) for x in date.split('/'))
-                HH, MM, SS = (int(y) for y in time.split(':'))
-                df.loc[i,"Day"] = datetime.date(yy, mm, dd).strftime("%A")
-                df.loc[i,"OnTime"] = "Yes" if (HH == 14) | (HH == 15 & MM == 00 ) else "No"
+            try:
+                df1 = data['Timestamp'].str.extract(r'(?P<Date>[0-9]{2}/[0-9]{2}/[0-9]{4}) (?P<Time>[0-9]{2}:[0-9]{1,2}:[0-9]{1,2})')
+                df2 = data['Attendance'].str.extract(r'(?P<Roll>[0-9]{4}[a-zA-Z]{2}[0-9]{2}) (?P<Name>[a-zA-Z ]*$)')
+                df = pd.concat([df1,df2],axis = 1)
+                for i in range(len(df)):
+                    date, time = df.iloc[i, 0], df.iloc[i, 1]
+                    dd, mm, yy = (int(x) for x in date.split('/'))
+                    HH, MM, SS = (int(y) for y in time.split(':'))
+                    df.loc[i,"Day"] = datetime.date(yy, mm, dd).strftime("%A")
+                    df.loc[i,"OnTime"] = "Yes" if (HH == 14) | (HH == 15 & MM == 00 ) else "No"
+            except:
+                print("There seems to be change in format provided and used in code")
             x = df.loc[((df["Day"] =="Thursday")|(df["Day"] =="Monday"))].reset_index(drop=True)
             start_date = datetime.datetime.strptime(x.iloc[0, 0],'%d/%m/%Y')
             end_date = datetime.datetime.strptime(x.iloc[-1, 0],'%d/%m/%Y')
