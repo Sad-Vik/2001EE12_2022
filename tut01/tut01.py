@@ -42,7 +42,7 @@ def octact_identification(mod):
     i = 1
     # making loop that runs for as long as m is less than total value count
     while m <= len(ip):
-        ip.loc[i+1, 'OctantID'] = str(low) + "-" + str(m-1)
+        # ip.loc[i+1, 'OctantID'] = str(low) + "-" + str(m-1)
         p1 = 0
         p2 = 0
         p3 = 0
@@ -79,8 +79,10 @@ def octact_identification(mod):
         ip.loc[i+1, "-4"] = n4
         # created a if statement to end the continous while loop created
         if m == len(ip):
+            ip.loc[i+1, 'OctantID'] = str(low) + "-" + str(m)
             break
         else:
+            ip.loc[i+1, 'OctantID'] = str(low) + "-" + str(m-1)
             low = m  # exchanging upper limit to lower so as to run again
             i = i+1
             m = mod*i  # modifying upper limit

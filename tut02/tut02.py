@@ -36,7 +36,7 @@ def octant_transition_count(mod):
             i = 1
             d = math.ceil(29745/mod)
             while m <= len(ip):
-                ip.loc[i+1, 'OctantID'] = str(low) + "-" + str(m-1)
+                # ip.loc[i+1, 'OctantID'] = str(low) + "-" + str(m-1)
                 p1 = 0
                 p2 = 0
                 p3 = 0
@@ -62,7 +62,7 @@ def octant_transition_count(mod):
                         p4 = p4+1
                     elif ip['Octant'][j] == "-4":
                         n4 = n4+1
-                    ip.loc[i+1, "+1"] = p1
+                ip.loc[i+1, "+1"] = p1
                 ip.loc[i+1, "-1"] = n1
                 ip.loc[i+1, "+2"] = p2
                 ip.loc[i+1, "-2"] = n2
@@ -71,8 +71,10 @@ def octant_transition_count(mod):
                 ip.loc[i+1, "+4"] = p4
                 ip.loc[i+1, "-4"] = n4
                 if m == len(ip):
+                    ip.loc[i+1, 'OctantID'] = str(low) + "-" + str(m)
                     break
                 else:
+                    ip.loc[i+1, 'OctantID'] = str(low) + "-" + str(m-1)
                     low = m
                     i = i+1
                     m = mod*i
