@@ -9,7 +9,7 @@ This repo contains a series of 8 tutorials (tut01 - tut08) of course CS384. Each
 - [Getting Started](#getting-started)
 - [Course Assignment Original Repository](#course-assignment-original-repository)
 - [Modules and Libraries](#modules-and-libraries)
-- [Streamlit Front-End](#streamlit-front-end)
+
 
 ## Course Overview
 
